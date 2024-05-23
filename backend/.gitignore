@@ -20,9 +20,8 @@ package-lock.json
 SCRIPTS/dev/deploy.sh
 
 # prisma
-src/features/infrastructure/local/prisma/migrations
-src/features/infrastructure/local/prisma/dev.db
-src/features/infrastructure/local/prisma/dev.db-journal
+src/features/infrastructure/local/services/prisma/migrations
+src/features/infrastructure/local/services/prisma/dev.debug
 
 # Editor directories and files
 .vscode/*
