@@ -13,10 +13,10 @@ export class PrismaServices {
   async sendNewsletter(subject: string, message: string) {
     const db_conection = db.getInstance();
     const users = await db_conection.user.findMany();
-    users.forEach(user => {
-      if(!user.unsubscribed) {
-      }
-    });
+    // users.forEach(user => {
+    //   if(!user.unsubscribed) {
+    //   }
+    // });
   }
 
   //todo: 
