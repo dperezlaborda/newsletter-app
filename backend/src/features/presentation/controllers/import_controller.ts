@@ -7,8 +7,19 @@ export class ImportController {
 
   async importContacts(req: Request, res: Response, next: NextFunction) {
     try {
-      await this._importRepository.importContacts();
-      res.send('import contacts route');
+      if(!req.body.csv){
+        res.status(400).json({
+          success: false,
+          message: 'File is not present or is invalid'
+        })
+      }else{
+        const cvsString = req.body.csv;
+        await this._importRepository.importContacts(cvsString);
+        res.status(200).json({
+          success: true,
+          message: 'File load successfully'
+        })
+      }
     } catch (error) {
       next(error);
     }
