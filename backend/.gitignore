@@ -21,7 +21,7 @@ SCRIPTS/dev/deploy.sh
 
 # prisma
 src/features/infrastructure/local/services/prisma/migrations
-src/features/infrastructure/local/services/prisma/dev.debug
+src/features/infrastructure/local/services/prisma/dev.db
 
 # Editor directories and files
 .vscode/*
