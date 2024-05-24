@@ -2,10 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import { INewsletterPresenter } from '../../domain/presenters/newsletter_presenter';
 import { NewsletterRepository } from '../../application/repositories/newsletter_repository';
 import { PrismaServices } from '../../infrastructure/local/services/prisma_services';
+import { EmailSenderService } from '../../infrastructure/local/services/email_sender_service';
 
 export class NewsletterController {
-  _newsletterRepository: INewsletterPresenter = new NewsletterRepository(new PrismaServices());
-  // _emailSenderService: EmailSenderService = new EmailSenderService();
+  _newsletterRepository: INewsletterPresenter = new NewsletterRepository(
+    new PrismaServices(),
+    new EmailSenderService()
+  );
 
   async sendNewsletter(req: Request, res: Response, next: NextFunction) {
     try {
@@ -15,8 +18,10 @@ export class NewsletterController {
           message: 'Subject or message is not present or is invalid'
         });
       }else{
-        //aca llamar EmailSenderService
-        // await this.EmailSenderService;
+        await this._newsletterRepository.sendNewsletter(
+          req.body.subject,
+          req.body.message
+        );
         res.status(200).json({ 
           success: true,
           message: 'Newsletter sent successfully'

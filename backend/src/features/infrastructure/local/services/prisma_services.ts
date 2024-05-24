@@ -1,7 +1,8 @@
+import { UserModel } from "../../../application/models/user_model";
 import { db } from "./prisma_client";
 
 export class PrismaServices {
-  
+
   async unsubscribe(userId: number) {
     const db_conection = db.getInstance();
     await db_conection.user.update({
@@ -10,19 +11,12 @@ export class PrismaServices {
     });
   }
 
-  async sendNewsletter(subject: string, message: string) {
+  async getUsers() {
     const db_conection = db.getInstance();
     const users = await db_conection.user.findMany();
-    // users.forEach(user => {
-    //   if(!user.unsubscribed) {
-    //   }
-    // });
+    return users.map(user => UserModel.fromDataBase(user as unknown as { [key: string] : never }));
   }
 
-  //todo: 
-  //- agregar un email a la lista de emails
-  //- agregar una lista de emails
-  //- agregar un csv para importar emails--> importContacts
   async addEmail(userEmail: string) {
     const db_conection = db.getInstance();
     await db_conection.user.create({
@@ -37,16 +31,13 @@ export class PrismaServices {
     });
   }
 
-  //- agregar un csv para importar emails--> importContacts
   async importContacts(csvFile: string) {
     const db_conection = db.getInstance();
     await db_conection.user.createMany({
       data: csvFile.split('\n').map(email => ({ email }))
     });
   }
+
+  //to-do add library to read image
   async importImage() {}
 }
-
-
-//sendNewsletter 
-// addEmail
