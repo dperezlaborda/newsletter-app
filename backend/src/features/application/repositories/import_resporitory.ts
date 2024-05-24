@@ -8,12 +8,11 @@ export class ImportRepository implements IImportPresenter {
     this._prismaServices = prismaServices;
   }
 
-  //TO-DO ADD LIBRARY TO READ CSV FILE
   async importContacts(csvFile: string): Promise<void> {
     return this._prismaServices.importContacts(csvFile);
   }
 
-  async importImage(): Promise<void> {
-    return this._prismaServices.importImage();
+  async importImage(imageUrl: string): Promise<void> {
+    return this._prismaServices.importImage(imageUrl);
   }
 }

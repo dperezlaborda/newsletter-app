@@ -2,15 +2,6 @@ import { UserModel } from "../../../application/models/user_model";
 import { db } from "./prisma_client";
 
 export class PrismaServices {
-
-  async unsubscribe(userId: number) {
-    const db_conection = db.getInstance();
-    await db_conection.user.update({
-      where: { id: userId },
-      data: { unsubscribed: true }
-    });
-  }
-
   async getUsers() {
     const db_conection = db.getInstance();
     const users = await db_conection.user.findMany();
@@ -31,6 +22,14 @@ export class PrismaServices {
     });
   }
 
+  async unsubscribe(userId: number) {
+    const db_conection = db.getInstance();
+    await db_conection.user.update({
+      where: { id: userId },
+      data: { unsubscribed: true }
+    });
+  }
+
   async importContacts(csvFile: string) {
     const db_conection = db.getInstance();
     await db_conection.user.createMany({
@@ -38,6 +37,10 @@ export class PrismaServices {
     });
   }
 
-  //to-do add library to read image
-  async importImage() {}
+  async importImage(image: string) {
+    const db_conection = db.getInstance();
+    await db_conection.newsletter.create({
+      data: { id: 1, title: 'Newsletter Title', content: image }
+    });
+  }
 }
